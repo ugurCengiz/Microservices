@@ -23,7 +23,7 @@ namespace FreeCourse.Services.Catalog.Models
 
 
         [BsonRepresentation(BsonType.DateTime)]
-        public DateTime CreatedDate { get; set; }
+        public DateTime CreatedTime { get; set; }
 
         public Feature Feature { get; set; }
 
