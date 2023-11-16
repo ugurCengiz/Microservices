@@ -2,7 +2,7 @@
 
 namespace FreeCourse.Services.Catalog.Dtos
 {
-    interface ICourseService
+   public interface ICourseService
     {
         Task<Response<List<CourseDto>>> GetAllAsync();
 

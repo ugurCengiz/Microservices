@@ -7,7 +7,7 @@ using MongoDB.Driver;
 
 namespace FreeCourse.Services.Catalog.Services
 {
-    internal class CategoryService:ICategoryService
+    public class CategoryService : ICategoryService
     {
         private readonly IMongoCollection<Category> _categoryCollection;
         private readonly IMapper _mapper;
@@ -29,23 +29,24 @@ namespace FreeCourse.Services.Catalog.Services
             return Response<List<Category>>.Success(_mapper.Map<List<Category>>(categories), 200);
         }
 
-        public async Task<Response<CategoryDto>> CreateAsync(Category category)
+        public async Task<Response<CategoryCreateDto>> CreateAsync(CategoryCreateDto categoryCreateDto)
         {
+            var category = _mapper.Map<Category>(categoryCreateDto);
             await _categoryCollection.InsertOneAsync(category);
 
-            return Response<CategoryDto>.Success(_mapper.Map<CategoryDto>(category), 200);
+            return Response<CategoryCreateDto>.Success(_mapper.Map<CategoryCreateDto>(category), 200);
         }
 
 
         public async Task<Response<CategoryDto>> GetByIdAsync(string id)
         {
             var category = await _categoryCollection.Find<Category>(x => x.Id == id).FirstOrDefaultAsync();
-            if (category==null)
+            if (category == null)
             {
                 return Response<CategoryDto>.Fail("Category no found", 404);
             }
 
-            return Response<CategoryDto>.Success(_mapper.Map<CategoryDto>(category),200);
+            return Response<CategoryDto>.Success(_mapper.Map<CategoryDto>(category), 200);
         }
     }
 
